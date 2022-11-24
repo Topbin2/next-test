@@ -1,0 +1,45 @@
+name: test
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Generate build number
+      uses: einaregilsson/build-number@v3
+      with:
+        token: ${{secrets.github_token}}        
+    - name: Print new build number
+      run: echo "Build number is $BUILD_NUMBER"
+
+# jobs:
+#   check:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Environment
+#           uses: actions/setup-node@v3
+#       with:
+#         node-version: '18'
+
+#       - name: Cache
+#         id: cache
+#     uses: actions/cache@v3
+#     with:
+#       path: node_modules
+#       key: npm-packages-${{ hashFiles('**/package-lock.json') }}
+
+#       - name: Dependencies
+#         if: steps.cache.outputs.cache-hit != 'true'
+#     run: npm install
+
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Build
+#         run: npm run build
+#     needs: check
