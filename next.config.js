@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   assetPrefix:
     process.env.NODE_ENV === "production"
-      ? "https://boramyy.github.io/invitation"
+      ? "https://next-test-mu-roan.vercel.app/"
       : "",
 };
 
