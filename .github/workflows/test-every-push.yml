@@ -75,6 +75,6 @@ jobs:
   #    if: github.event.pull_request.merged == true
       id: date
       run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
-    #  - name: Tagging
-    #   uses: actions/create-release@v1
-    #   needs: build
+     - name: Tagging
+      uses: actions/create-release@v1
+      needs: build
