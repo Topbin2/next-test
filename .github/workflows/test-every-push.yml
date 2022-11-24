@@ -77,4 +77,9 @@ jobs:
       run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
      - name: Tagging
       uses: actions/create-release@v1
-      needs: build
+      # needs: build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
+        release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
