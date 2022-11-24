@@ -71,3 +71,10 @@ jobs:
         token: ${{secrets.github_token}}        
     - name: Print new build number
       run: echo "Build number is $BUILD_NUMBER"
+    - name: Get current date
+      if: github.event.pull_request.merged == true
+      id: date
+      run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
+     - name: Tagging
+      uses: actions/create-release@v1
+      needs: build
