@@ -64,8 +64,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 2022.01.$BUILD_NUMBER
-          release_name: 2022.01.$BUILD_NUMBER
+          tag_name: 2022.01.${{ BUILD_NUMBER }}
+          release_name: 2022.01.${{ BUILD_NUMBER }}
           allowUpdates: "true"
           # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
           # body: "2022.01.05 body"
