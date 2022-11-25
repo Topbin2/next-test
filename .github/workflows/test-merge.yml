@@ -1,80 +1,24 @@
-name: merge
-
-
-
+name: Release
 on:
   pull_request:
-    branches: [ main ]
-      types: [ closed ]
-
-
-
+    branches:
+      - main
+    # types: [ closed ]
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3  
-      
-      - name: Environment
-          uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-        
-      - name: Cache
-        id: cache
-    uses: actions/cache@v3
-    with:
-      path: node_modules
-      key: npm-packages-${{ hashFiles('**/package-lock.json') }}
-
-
-
-     - name: Dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-    run: npm install
-
-
-
- build:
+  tagging:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-
-
-     - name: Build
-        run: npm run build
-    needs: check
-
-
-
-     - name: Count build number
-        id: number
-    uses: einaregilsson/build-number@v3
-    with:
-      token: ${{ secrets.GITHUB_TOKEN }}
-
-
-
- deploy-to-dev:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-
-
-     - name: Get current date
+      - name: Get current date
         if: github.event.pull_request.merged == true
-    id: date
-    run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
+        id: date
+        run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
 
-
-
-     - name: Tagging
-        uses: actions/create-release@v1
-    needs: build
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    with:
-      tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
-      release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
+      # - name: Tagging
+      #   uses: actions/create-release@v1
+      #   needs: build
+      #   env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #    tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
+      #    release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
