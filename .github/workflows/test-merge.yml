@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get current date
-        if: github.event.pull_request.merged == true
+        # if: github.event.pull_request.merged == true
         id: date
         run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
 
