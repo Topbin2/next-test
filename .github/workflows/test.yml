@@ -29,16 +29,16 @@ on:
     branches:
       - main # main branch로 push될 때 아래 action이 실행된다.
 jobs:
-  count build number:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate build number
-       uses: einaregilsson/build-number@v3
-       with:
-       token: ${{secrets.github_token}}        
+  # count build number:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Generate build number
+  #      uses: einaregilsson/build-number@v3
+  #      with:
+  #      token: ${{secrets.github_token}}        
 
-      - name: Print new build number
-       run: echo "Build number is $BUILD_NUMBER"
+  #     - name: Print new build number
+  #      run: echo "Build number is $BUILD_NUMBER"
 
   tag:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
         uses: mathieudutour/github-tag-action@v5.5 # 가져다 쓸 auto tagging 프로그램
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }} # secrets.GITHUB_TOKEN 는 자동생성됨
-          
+
       - name: Create a GitHub release
         uses: actions/create-release@v1
         env:
