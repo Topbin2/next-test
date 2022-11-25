@@ -46,6 +46,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Generate build number
+        id: buildnumber
         uses: einaregilsson/build-number@v3
         with:
           token: ${{secrets.github_token}}
@@ -64,8 +65,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: 2022.01.${{ BUILD_NUMBER }}
-          release_name: 2022.01.${{ BUILD_NUMBER }}
+          tag_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
+          release_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
           allowUpdates: "true"
           # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
           # body: "2022.01.05 body"
