@@ -43,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "sangbin"
+          tag_name: "Version"
           release_name: "2022.01.05"
           # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+          body: "2022.01.05 body"
