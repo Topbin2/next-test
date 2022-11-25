@@ -50,8 +50,8 @@ jobs:
         with:
           token: ${{secrets.github_token}}
 
-      # - name: Print new build number
-      #   run: echo "Build number is $BUILD_NUMBER"
+      - name: Print new build number
+        run: echo "Build number is $BUILD_NUMBER"
 
       - name: Bump version and push tag
         id: tag_version
@@ -64,7 +64,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "Version"
+          tag_name: "Version1"
           release_name: "2022.01.06"
           allowUpdates: "true"
           # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
