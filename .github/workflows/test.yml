@@ -1,9 +1,9 @@
 # name: Release
-# on:
-#   pull_request:
-#     branches:
-#       - main
-#     types: [ closed ]
+on:
+  pull_request:
+    branches:
+      - production
+    types: [ closed ]
 # jobs:
 #   merge:
 #     runs-on: ubuntu-latest
@@ -67,6 +67,5 @@ jobs:
         with:
           tag_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
           release_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
-          allowUpdates: "true"
           # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
           # body: "2022.01.05 body"
