@@ -1,9 +1,9 @@
 # name: Release
-# on:
-#   pull_request:
-#     branches:
-#       - production
-#     types: [ closed ]
+on:
+  pull_request:
+    branches:
+      - production
+    types: [ closed ]
 # jobs:
 #   merge:
 #     runs-on: ubuntu-latest
@@ -23,19 +23,22 @@
 #          tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
 #          release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
 
-name: test
+name: Version Control
+
 on:
-  push:
+  pull_request:
     branches:
-      - main # main branch로 push될 때 아래 action이 실행된다.
+      - production
+    types: [ closed ]
+
 jobs:
-  tag:
+  version:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Get current date
-        # if: github.event.pull_request.merged == true
+        if: github.event.pull_request.merged == true
         id: date
         run: echo YEAR=$(date +%Y) >> $GITHUB_ENV
 
@@ -57,6 +60,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.YEAR }}.01.${{ steps.buildnumber.outputs.build_number }}
-          # release_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
           release_name: ${{ env.YEAR }}.01.${{ steps.buildnumber.outputs.build_number }}
 
