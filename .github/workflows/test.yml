@@ -29,21 +29,15 @@ on:
     branches:
       - main # main branch로 push될 때 아래 action이 실행된다.
 jobs:
-  # count build number:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Generate build number
-  #      uses: einaregilsson/build-number@v3
-  #      with:
-  #      token: ${{secrets.github_token}}        
-
-  #     - name: Print new build number
-  #      run: echo "Build number is $BUILD_NUMBER"
-
   tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Get current date
+        if: github.event.pull_request.merged == true
+        id: date
+        run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
 
       - name: Generate build number
         id: buildnumber
@@ -53,9 +47,9 @@ jobs:
 
       - name: Bump version and push tag
         id: tag_version
-        uses: mathieudutour/github-tag-action@v5.5 # 가져다 쓸 auto tagging 프로그램
+        uses: mathieudutour/github-tag-action@v5.5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # secrets.GITHUB_TOKEN 는 자동생성됨
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create a GitHub release
         uses: actions/create-release@v1
@@ -64,5 +58,3 @@ jobs:
         with:
           tag_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
           release_name: 2022.01.${{ steps.buildnumber.outputs.build_number }}
-          # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
-          # body: "2022.01.05 body"
