@@ -1,24 +1,48 @@
-name: Release
+# name: Release
+# on:
+#   pull_request:
+#     branches:
+#       - main
+#     types: [ closed ]
+# jobs:
+#   merge:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Get current date
+#         if: github.event.pull_request.merged == true
+#         id: date
+#         run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
+
+#       - name: Tagging
+#         uses: actions/create-release@v1
+#         # needs: build
+#         env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#          tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
+#          release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
+
+name: Bump version
 on:
-  pull_request:
+  push:
     branches:
-      - main
-    types: [ closed ]
+      - main # master branch로 push될 때 아래 action이 실행된다.
 jobs:
-  merge:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Get current date
-        if: github.event.pull_request.merged == true
-        id: date
-        run: echo TODAY=$(date +%Y.%m) >> $GITHUB_ENV
-
-      - name: Tagging
-        uses: actions/create-release@v1
-        # needs: build
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5 # 가져다 쓸 auto tagging 프로그램
         with:
-         tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
-         release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
+          github_token: ${{ secrets.GITHUB_TOKEN }} # secrets.GITHUB_TOKEN 는 자동생성됨
+      - name: Create a GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
