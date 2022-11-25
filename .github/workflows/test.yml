@@ -23,13 +23,13 @@
 #          tag_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
 #          release_name: ${{ env.TODAY }}.${{ needs.build.outputs.build_number }}
 
-name: Bump version
+name: test
 on:
   push:
     branches:
-      - main # master branch로 push될 때 아래 action이 실행된다.
+      - main # main branch로 push될 때 아래 action이 실행된다.
 jobs:
-  build:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -44,5 +44,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag_version.outputs.new_tag }}
-          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          release_name: 2022.${{ steps.tag_version.outputs.new_tag }}
           body: ${{ steps.tag_version.outputs.changelog }}
