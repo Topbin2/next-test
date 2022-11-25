@@ -37,7 +37,7 @@ jobs:
       - name: Get current date
         # if: github.event.pull_request.merged == true
         id: date
-        run: echo YEAR=$(date + %Y) >> $GITHUB_ENV
+        run: echo YEAR=$(date +%Y) >> $GITHUB_ENV
 
       - name: Generate build number
         id: buildnumber
