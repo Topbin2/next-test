@@ -59,6 +59,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.YEAR }}.01.${{ steps.buildnumber.outputs.build_number }}
-          release_name: ${{ env.YEAR }}.01.${{ steps.buildnumber.outputs.build_number }}
+          tag_name: ${{ env.YEAR }}.01.${{ steps.buildnumber.outputs.build_number }} # 스프린트 넘버가 변경되면 가운데 숫자 수정
+          release_name: ${{ env.YEAR }}.01.${{ steps.buildnumber.outputs.build_number }} # 스프린트 넘버가 변경되면 가운데 숫자 수정
 
