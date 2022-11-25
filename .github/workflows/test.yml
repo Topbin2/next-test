@@ -65,7 +65,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "Version"
-          release_name: "2022.01.05"
+          release_name: "2022.01.06"
           allowUpdates: "true"
           # release_name: 2022.01.${{ steps.tag_version.outputs.new_tag }}
           # body: "2022.01.05 body"
